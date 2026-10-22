@@ -1,0 +1,10 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "herds-web",
+  "compatibility_date": "2026-10-16",
+  "routes": [{ "pattern": "herds.metalogrom.com", "custom_domain": true }],
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "single-page-application"
+  }
+}

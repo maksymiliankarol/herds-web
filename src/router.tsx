@@ -7,6 +7,8 @@ import { Cities } from "./routes/cities";
 import { MyProfile } from "./routes/my-profile";
 import { City } from "./routes/city";
 import { RequireProfile } from "./routes/require-profile";
+import { Contact } from "./routes/contact";
+import { HowItWorks } from "./routes/how-it-works";
 
 export const router = createBrowserRouter([
   {
@@ -23,6 +25,8 @@ export const router = createBrowserRouter([
             element: <RequireProfile />,
             children: [{ path: "/city/:city/:room?", element: <City /> }],
           },
+          { path: "contact", element: <Contact /> },
+          { path: "how-it-works", element: <HowItWorks /> },
           { path: "*", element: <NotFound /> },
         ]
       }

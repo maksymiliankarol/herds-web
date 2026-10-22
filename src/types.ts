@@ -1,5 +1,3 @@
-export type Room = { name: string; title: string; created_at: number }
-
 export type Message = { id: number; author: string; body: string; created_at: number }
 
 export type ServerEvent =

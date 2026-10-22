@@ -18,7 +18,7 @@ interface ChildLayoutProps {
 
 export function ChildLayout({ children, size = "md" }: ChildLayoutProps) {
   return (
-    <div className={`${sizeClasses[size]} flex flex-col gap-8 py-4 mx-auto`}>
+    <div className={`${sizeClasses[size]} flex flex-col gap-4 mx-auto`}>
       <nav>
         <Link
           to="/"

@@ -13,8 +13,15 @@ async function request<T>(path: string, init: RequestInit = {}, token?: string):
   const headers = new Headers(init.headers)
   if (token) headers.set('Authorization', `Bearer ${token}`)
 
-  const res = await fetch(`${API_URL}${path}`, { ...init, headers })
-
+  let res: Response
+  try {
+    res = await fetch(`${API_URL}${path}`, { ...init, headers })
+  } catch (e) {
+    // an aborted request was superseded: let the caller see the abort and ignore it
+    if (init.signal?.aborted) throw e
+    throw new ApiError(0, 'Network error') // status 0: no response at all
+  }
+  
   if (!res.ok) {
     // the API answers failures with { "error": "..." }
     const data = (await res.json().catch(() => null)) as { error?: string } | null
