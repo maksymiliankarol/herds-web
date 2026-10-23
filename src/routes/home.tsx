@@ -8,7 +8,8 @@ export function Home() {
         <Tile to="/profile" title="My Profile" className="bg-blue text-white" />
         <Tile to="/how-it-works" title="How It Works" className="bg-sage text-white"/>
         <Tile to="/contact" title="Contact" className="bg-white text-black"/>
-        <Tile to="/how-it-works" title="Terms" className="bg-white text-black"/>
+        <Tile to="/terms-of-service" title="Terms" className="bg-white text-black"/>
+        <Tile to="/privacy-policy" title="Privacy" className="bg-white text-black"/>
         <Tile to="https://metalogrom.com" title="Metalogrom" className="bg-offblack text-white"/>
       </div>
     </div>

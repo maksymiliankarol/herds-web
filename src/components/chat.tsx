@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useLocation } from 'react-router'
 import { Turnstile } from '@marsidev/react-turnstile'
+import { formatMessageTime } from '../lib/format'
 import { useRoom } from '../hooks/use-room'
 import { useStickToBottom } from '../hooks/use-stick-to-bottom'
 import { useTurnstileToken } from '../hooks/use-turnstile-token'
@@ -92,7 +93,7 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
               >
                 {m.body}
               </div>
-              <small className="opacity-60">{new Date(m.created_at).toLocaleTimeString()}</small>
+              <small className="opacity-60">{formatMessageTime(m.created_at)}</small>
             </li>
           )
         })}

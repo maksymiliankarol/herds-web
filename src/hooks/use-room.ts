@@ -94,7 +94,12 @@ export function useRoom(
 
       socket.onmessage = (e) => {
         if (e.data === 'pong') return
-        const event = JSON.parse(e.data) as ServerEvent
+        let event: ServerEvent
+        try {
+          event = JSON.parse(e.data) as ServerEvent
+        } catch {
+          return // ignore a malformed frame instead of throwing inside the handler
+        }
 
         if (event.type === 'history') {
           // the first real event: only now are we truly connected

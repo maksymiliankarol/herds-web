@@ -24,7 +24,7 @@ export function HowItWorks() {
 
       <h2 className={h2ClassName}>One city, many rooms</h2>
       <p>
-        Every city with more than 100.000 people can have its own chat, divided into rooms: 
+        Every city with more than 100,000 people can have its own chat, divided into rooms: 
         food, events, higher education and more. It's one shared place for the things 
         that matter to people who share the same ground. A recommendation for a good 
         bakery, a last-minute concert, a question about a university course: each 

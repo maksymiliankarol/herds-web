@@ -16,11 +16,10 @@ dist-ssr
 .wrangler
 
 # Env
-.env
+.env.local
 
-# Dev
+# Todo
 TODO.md
-DEV.md
 
 # Editor directories and files
 .vscode/*

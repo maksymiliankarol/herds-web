@@ -1,7 +1,7 @@
 import { useState, type SubmitEvent } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { ChildLayout } from '../layouts/child-layout'
-import { getProfileName, isValidName, setProfileName } from '../lib/profile'
+import { getProfileName, isReservedName, isValidName, setProfileName } from '../lib/profile'
 
 export function MyProfile() {
   const navigate = useNavigate()
@@ -15,7 +15,7 @@ const save = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     const value = name.trim()
     if (!isValidName(value)) {
-      setError('2-20 characters: letters, digits, _ or -')
+      setError(isReservedName(value) ? 'This name is reserved' : '2-20 characters: letters, digits, _ or -')
       return
     }
     setProfileName(value)
@@ -39,6 +39,12 @@ const save = (e: SubmitEvent<HTMLFormElement>) => {
             autoFocus
           />
         </div>
+        <p className="opacity-60">
+          Your name is public and not verified, and everything you write in a room is
+          visible to everyone there. Don't share personal details. By continuing you accept
+          the <Link to="/terms" className="underline">Terms</Link> and
+          the <Link to="/privacy" className="underline">Privacy Policy</Link>.
+        </p>
         {error && (
           <p id="name-error" role="alert" className="text-error">
             {error}

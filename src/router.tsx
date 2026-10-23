@@ -9,6 +9,8 @@ import { City } from "./routes/city";
 import { RequireProfile } from "./routes/require-profile";
 import { Contact } from "./routes/contact";
 import { HowItWorks } from "./routes/how-it-works";
+import { TermsOfService } from "./routes/terms-of-service";
+import { PrivacyPolicy } from "./routes/privacy-policy";
 
 export const router = createBrowserRouter([
   {
@@ -27,6 +29,8 @@ export const router = createBrowserRouter([
           },
           { path: "contact", element: <Contact /> },
           { path: "how-it-works", element: <HowItWorks /> },
+          { path: "terms-of-service", element: <TermsOfService /> },
+          { path: "privacy-policy", element: <PrivacyPolicy /> },
           { path: "*", element: <NotFound /> },
         ]
       }

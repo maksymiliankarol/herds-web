@@ -1,26 +1,18 @@
-import { useCallback, useEffect, useRef } from 'react'
-import type { TurnstileInstance } from '@marsidev/react-turnstile'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const TOKEN_TIMEOUT_MS = 20_000
 
 type Pending = { resolve: (token: string) => void; reject: (error: Error) => void }
 
-// Defined once, so the widget always receives the same options object
-const OPTIONS = {
-  theme: 'light',
-  refreshExpired: 'manual',
-  appearance: 'interaction-only',
-} as const
-
 // Turns the Turnstile widget into a promise: getToken() resolves with a fresh, single-use token.
 // Spread widgetProps onto <Turnstile />. getToken is stable, so it's safe in effect dependencies.
 export function useTurnstileToken() {
-  const widget = useRef<TurnstileInstance>(null)
   const pending = useRef<Pending | null>(null)
+  const [resetKey, setResetKey] = useState(0)
 
-  // reset() makes the widget produce a fresh token; if the widget isn't ready yet,
-  // its first token resolves the request instead. Rejects if the widget never answers
-  // (script blocked, unsupported browser...).
+  // Bumping resetKey makes the widget produce a fresh token; if the widget isn't ready
+  // yet, its first token resolves the request instead. Rejects if the widget never
+  // answers (script blocked, unsupported browser...).
   const getToken = useCallback(
     () =>
       new Promise<string>((resolve, reject) => {
@@ -41,12 +33,12 @@ export function useTurnstileToken() {
         }, TOKEN_TIMEOUT_MS)
 
         pending.current = entry
-        widget.current?.reset()
+        setResetKey((k) => k + 1)
       }),
     [],
   )
 
-  const onSuccess = useCallback((token: string) => {
+  const onToken = useCallback((token: string) => {
     pending.current?.resolve(token)
     pending.current = null
   }, [])
@@ -65,13 +57,5 @@ export function useTurnstileToken() {
     [],
   )
 
-  const widgetProps = {
-    ref: widget,
-    siteKey: import.meta.env.VITE_TURNSTILE_SITE_KEY,
-    options: OPTIONS,
-    onSuccess,
-    onError,
-  }
-
-  return { getToken, widgetProps }
+  return { getToken, widgetProps: { onToken, onError, resetKey } }
 }
