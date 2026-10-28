@@ -4,6 +4,7 @@ export const CLOSE_VERIFICATION_FAILED = 4403
 export const CLOSE_NAME_TAKEN = 4409
 export const CLOSE_ROOM_FULL = 4429
 export const CLOSE_IP_LIMIT = 4430
+export const MAX_FAILED_CONNECTS = 3
 
 export type RejectionAction = 'retry' | 'change-name'
 
@@ -35,4 +36,9 @@ const KNOWN: Record<number, Rejection> = {
 // serverText is the reason the server sent. It's only shown for codes we don't know.
 export function describeRejection(code: number, serverText?: string): Rejection {
   return KNOWN[code] ?? { message: serverText || 'Could not join the room', actions: ['retry'] }
+}
+
+export const GAVE_UP: Rejection = {
+  message: 'Could not connect to the room',
+  actions: ['retry'],
 }

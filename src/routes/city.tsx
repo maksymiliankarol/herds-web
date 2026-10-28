@@ -8,6 +8,7 @@ import type { ProfileContext } from './require-profile'
 import { Chat } from '../components/chat'
 import { News } from '../components/news'
 import { describeError } from '../lib/errors'
+import { buildRoomTree, flattenRooms, parentOf, type RoomNode } from '../lib/room-tree'
 
 export function City() {
   const { name } = useOutletContext<ProfileContext>()
@@ -29,8 +30,10 @@ export function City() {
     if (!pickerOpen && dialog.open) dialog.close()
   }, [pickerOpen])
 
+  const tree = rooms ? buildRoomTree(rooms) : []
+
   if (rooms && !roomSlug && rooms.length > 0) {
-    return <Navigate to={`/city/${city}/${rooms[0].slug}`} replace />
+    return <Navigate to={`/city/${city}/${flattenRooms(tree)[0].slug}`} replace />
   }
 
   const room = rooms?.find((r) => r.slug === roomSlug)
@@ -80,8 +83,8 @@ export function City() {
       {/* desktop sidebar */}
       <aside className="hidden md:flex h-full w-60 flex-col">
         <BackLink className="pb-4" />
-        {cityName && <h1 className="pb-2 text-xl">{cityName}</h1>}
-        <RoomList city={city} rooms={rooms ?? []} />
+        {cityName && <h1 className="pb-4 text-xl">{cityName}</h1>}
+        <RoomList city={city} tree={tree} />
       </aside>
 
       <div className="flex flex-1 min-w-0 min-h-0 flex-col gap-4">
@@ -128,7 +131,7 @@ export function City() {
           <div className="min-h-0 flex-1 overflow-y-auto">
             <RoomList
               city={city}
-              rooms={rooms ?? []}
+              tree={tree}
               onNavigate={onRoomSelected}
               itemClassName="py-3 text-lg"
             />
@@ -155,31 +158,98 @@ function BackLink({ className = '' }: { className?: string }) {
   )
 }
 
+function Marker({ shape }: { shape: 'square' | 'right' | 'down' }) {
+  return (
+    <svg
+      viewBox="0 0 12 12"
+      aria-hidden="true"
+      strokeLinejoin="round"
+      className="size-3 shrink-0 fill-yellow stroke-black stroke-2"
+    >
+      {shape === 'square' && <rect x="1" y="1" width="8" height="8" />}
+      {shape === 'right' && <polygon points="1,1 11,6 1,11" />}
+      {shape === 'down' && <polygon points="1,1 11,1 6,11" />}
+    </svg>
+  )
+}
+
 function RoomList({
   city,
-  rooms,
+  tree,
   onNavigate,
   itemClassName = '',
 }: {
   city: string
-  rooms: RoomSummary[]
+  tree: RoomNode[]
   onNavigate?: () => void
   itemClassName?: string
 }) {
-  return (
-    <nav className="flex flex-col gap-2">
-      {rooms.map((r) => (
+  const { room: activeSlug } = useParams()
+  const activeParent = activeSlug ? parentOf(activeSlug) : null
+
+  // slugs of expanded parents; the parent of the active room starts open
+  const [open, setOpen] = useState<Set<string>>(() => new Set(activeParent ? [activeParent] : []))
+
+  // navigating into a sub-room (link, redirect, back button) opens its parent,
+  // but never closes anything, so a manual collapse isn't undone
+  useEffect(() => {
+    if (!activeParent) return
+    setOpen((prev) => (prev.has(activeParent) ? prev : new Set(prev).add(activeParent)))
+  }, [activeParent])
+
+  const toggle = (slug: string) =>
+    setOpen((prev) => {
+      const next = new Set(prev)
+      if (!next.delete(slug)) next.add(slug)
+      return next
+    })
+
+  const row = (r: RoomSummary, opts: { child?: boolean; children?: RoomSummary[] } = {}) => {
+    const hasChildren = !!opts.children?.length
+    const expanded = open.has(r.slug)
+
+    return (
+      <div key={r.slug} className={`flex items-center gap-2 ${opts.child ? 'pl-5' : ''}`}>
+        {hasChildren ? (
+          <button
+            type="button"
+            onClick={() => toggle(r.slug)}
+            aria-expanded={expanded}
+            aria-controls={`subrooms-${r.slug}`}
+            aria-label={`${expanded ? 'Collapse' : 'Expand'} ${r.title}`}
+            className="flex items-center self-stretch px-1 cursor-pointer hover:brightness-75"
+          >
+            <Marker shape={expanded ? 'down' : 'right'} />
+          </button>
+        ) : (
+          <span className="flex items-center self-stretch px-1">
+            <Marker shape="square" />
+          </span>
+        )}
         <NavLink
-          key={r.slug}
           to={`/city/${city}/${r.slug}`}
           onClick={onNavigate}
           className={({ isActive }) =>
-            `flex items-center gap-2 bg-offwhite hover:brightness-75 ${itemClassName} ${isActive ? 'font-bold' : ''}`
+            `flex-1 min-w-0 bg-offwhite hover:brightness-75 ${itemClassName} ${isActive ? 'font-bold' : ''}`
           }
         >
-          <span className="h-3 w-3 shrink-0 border-2 border-black bg-yellow" />
-          <span>{r.title}</span>
+          {r.title}
         </NavLink>
+      </div>
+    )
+  }
+
+  return (
+    <nav className="flex flex-col gap-2">
+      {tree.map((room) => (
+        <div key={room.slug} className="flex flex-col gap-2">
+          {row(room, { children: room.children })}
+          {room.children.length > 0 && open.has(room.slug) && (
+            <div id={`subrooms-${room.slug}`} className="flex flex-col gap-2">
+              {room.children.map((child) => row(child, { child: true }))}
+            </div>
+          )}
+        </div>
       ))}
     </nav>
   )

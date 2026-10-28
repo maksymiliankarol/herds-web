@@ -42,8 +42,8 @@ const save = (e: SubmitEvent<HTMLFormElement>) => {
         <p className="opacity-60">
           Your name is public and not verified, and everything you write in a room is
           visible to everyone there. Don't share personal details. By continuing you accept
-          the <Link to="/terms" className="underline">Terms</Link> and
-          the <Link to="/privacy" className="underline">Privacy Policy</Link>.
+          the <Link to="/terms-of-service" className="underline">Terms</Link> and
+          the <Link to="/privacy-policy" className="underline">Privacy Policy</Link>.
         </p>
         {error && (
           <p id="name-error" role="alert" className="text-error">

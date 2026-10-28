@@ -6,6 +6,8 @@ import {
   CLOSE_NAME_TAKEN,
   CLOSE_VERIFICATION_FAILED,
   describeRejection,
+  GAVE_UP,
+  MAX_FAILED_CONNECTS,
   type Rejection,
 } from '../lib/rejections'
 
@@ -60,8 +62,20 @@ export function useRoom(
     let rejected = false
 
     const scheduleRetry = () => {
+      attempt++
+
+      // Too many failures in a row (no history received in between): stop looping,
+      // so the user isn't served a new challenge every second, and offer a manual retry.
+      if (attempt >= MAX_FAILED_CONNECTS) {
+        rejected = true
+        setError(GAVE_UP.message)
+        setRejection(GAVE_UP)
+        setStatus('rejected')
+        return
+      }
+
       setStatus('closed')
-      retryTimer = window.setTimeout(connect, retryDelay(attempt++))
+      retryTimer = window.setTimeout(connect, retryDelay(attempt - 1))
     }
 
     const connect = async () => {

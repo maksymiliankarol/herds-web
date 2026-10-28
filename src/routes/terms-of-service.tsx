@@ -8,7 +8,7 @@ export function TermsOfService() {
   return (
     <ChildLayout size="xs">
       <h1 className={h1ClassName}>Terms of Service</h1>
-      <p>Last updated: [date]. Herds is operated by [operator name, country] ("we"). By using it you accept these terms.</p>
+      <p>Last updated: 27/11/2026. Herds is operated by metalogrom.com. By using it you accept these terms.</p>
 
       <h2 className={h2ClassName}>Who can use it</h2>
       <p>You must be at least 16 years old.</p>
@@ -47,7 +47,7 @@ export function TermsOfService() {
       <h2 className={h2ClassName}>Changes and law</h2>
       <p>
         We may update these terms; continuing to use Herds means you accept the new version.
-        These terms are governed by the law of [country], subject to mandatory consumer
+        These terms are governed by the law of Poland, subject to mandatory consumer
         protections where you live.
       </p>
     </ChildLayout>
