@@ -3,9 +3,11 @@ import { Link } from 'react-router'
 import { ChildLayout } from '../layouts/child-layout'
 import { useCities } from '../hooks/use-cities'
 import { CityBadge } from '../components/city-badge'
+import { useI18n } from '../lib/i18n-context'
 
 
 export function Cities() {
+  const { t } = useI18n()
   const [query, setQuery] = useState('')
   const { cities, loading, error } = useCities(query)
 
@@ -14,8 +16,8 @@ export function Cities() {
       <div className="flex flex-col gap-4">
         <input
           type="search"
-          aria-label="Search for your city"
-          placeholder="Search for your city..."
+          aria-label={t.cities.searchLabel}
+          placeholder={t.cities.searchPlaceholder}
           className="w-full border-2 p-3 bg-white"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -38,7 +40,7 @@ export function Cities() {
           ))}
 
           {!loading && !error && cities.length === 0 && (
-            <p className="opacity-60">No cities found</p>
+            <p className="opacity-60">{t.cities.noCities}</p>
           )}
         </section>
       </div>

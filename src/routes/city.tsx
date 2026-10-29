@@ -9,8 +9,10 @@ import { Chat } from '../components/chat'
 import { News } from '../components/news'
 import { describeError } from '../lib/errors'
 import { buildRoomTree, flattenRooms, parentOf, type RoomNode } from '../lib/room-tree'
+import { useI18n } from '../lib/i18n-context'
 
 export function City() {
+  const { t } = useI18n()
   const { name } = useOutletContext<ProfileContext>()
   const { city = '', room: roomSlug } = useParams()
   const { data, error } = useGet<CityRooms>(`/cities/${encodeURIComponent(city)}/rooms`)
@@ -47,15 +49,15 @@ export function City() {
   if (error) {
     main = (
       <Notice error>
-        {describeError(error, 'Could not load rooms', { 404: 'City not found' })}
+        {describeError(error, t.city.couldNotLoadRooms, { 404: t.city.cityNotFound })}
       </Notice>
     )
   } else if (!rooms) {
-    main = <Notice>Loading...</Notice>
+    main = <Notice>{t.common.loading}</Notice>
   } else if (rooms.length === 0) {
-    main = <Notice>No rooms yet</Notice>
+    main = <Notice>{t.city.noRooms}</Notice>
   } else if (!room) {
-    main = <Notice>Room not found</Notice>
+    main = <Notice>{t.city.roomNotFound}</Notice>
   } else {
     // key = remount per room: fresh socket, fresh message list.
     // Both stay mounted on mobile, so the socket stays alive while you read news.
@@ -98,14 +100,14 @@ export function City() {
               className="bg-green text-white border-2 border-black px-4 py-2 truncate"
               onClick={() => setPickerOpen(true)}
             >
-              {room?.title ?? 'Rooms'}
+              {room?.title ?? t.city.rooms}
             </button>
             <button
               type="button"
               className="bg-yellow border-2 border-black px-4 py-2"
               onClick={() => setView((v) => (v === 'chat' ? 'news' : 'chat'))}
             >
-              {view === 'chat' ? 'News' : 'Chat'}
+              {view === 'chat' ? t.city.news : t.city.chat}
             </button>
           </nav>
         </div>
@@ -118,7 +120,7 @@ export function City() {
           className="m-0 size-full max-h-none max-w-none flex-col gap-4 bg-offwhite p-4 text-foreground open:flex md:hidden"
         >
           <header className="flex items-center justify-between">
-            <h2 className="text-xl">{cityName ?? 'Rooms'}</h2>
+            <h2 className="text-xl">{cityName ?? t.city.rooms}</h2>
             <button
               type="button"
               aria-label="Close rooms"
@@ -148,11 +150,12 @@ export function City() {
 
 // Back link, city name and room list: shared by the desktop sidebar and the mobile dropdown
 function BackLink({ className = '' }: { className?: string }) {
+  const { t } = useI18n()
   return (
     <nav className={className}>
       <Link to="/cities" className="flex items-center gap-2 hover:underline">
         <ArrowBack />
-        <span>Back</span>
+        <span>{t.common.back}</span>
       </Link>
     </nav>
   )
@@ -184,6 +187,7 @@ function RoomList({
   onNavigate?: () => void
   itemClassName?: string
 }) {
+  const { t } = useI18n()
   const { room: activeSlug } = useParams()
   const activeParent = activeSlug ? parentOf(activeSlug) : null
 
@@ -216,7 +220,7 @@ function RoomList({
             onClick={() => toggle(r.slug)}
             aria-expanded={expanded}
             aria-controls={`subrooms-${r.slug}`}
-            aria-label={`${expanded ? 'Collapse' : 'Expand'} ${r.title}`}
+            aria-label={expanded ? t.city.collapseRoom(r.title) : t.city.expandRoom(r.title)}
             className="flex items-center self-stretch px-1 cursor-pointer hover:brightness-75"
           >
             <Marker shape={expanded ? 'down' : 'right'} />

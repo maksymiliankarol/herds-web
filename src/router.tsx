@@ -11,6 +11,8 @@ import { Contact } from "./routes/contact";
 import { HowItWorks } from "./routes/how-it-works";
 import { TermsOfService } from "./routes/terms-of-service";
 import { PrivacyPolicy } from "./routes/privacy-policy";
+import { Settings } from "./routes/settings";
+import { Policies } from "./routes/policies";
 
 export const router = createBrowserRouter([
   {
@@ -23,12 +25,14 @@ export const router = createBrowserRouter([
           { index: true, element: <Home /> },
           { path: "/cities", element: <Cities /> },
           { path: "/profile", element: <MyProfile /> },
+          { path: "settings", element: <Settings /> },
           {
             element: <RequireProfile />,
             children: [{ path: "/city/:city/:room?", element: <City /> }],
           },
           { path: "contact", element: <Contact /> },
           { path: "how-it-works", element: <HowItWorks /> },
+          { path: "policies", element: <Policies /> },
           { path: "terms-of-service", element: <TermsOfService /> },
           { path: "privacy-policy", element: <PrivacyPolicy /> },
           { path: "*", element: <NotFound /> },

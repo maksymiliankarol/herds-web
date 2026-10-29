@@ -9,7 +9,7 @@ export function PrivacyPolicy() {
     <ChildLayout size="xs">
       <h1 className={h1ClassName}>Privacy Policy</h1>
       <p>
-        Last updated: 27/11/2026. Controller: metalogrom.com, contact:
+        Last updated: 29/11/2026. Controller: metalogrom.com, contact:
         herds@metalogrom.com.
       </p>
 
@@ -33,7 +33,7 @@ export function PrivacyPolicy() {
       <h2 className={h2ClassName}>Your browser</h2>
       <p>
         Your chosen name is saved in your browser's local storage so you don't have to enter
-        it again. We use no cookies, analytics or advertising.
+        it again. If you choose a language, we save it in a cookie (herds_lang, one year) to remember it. We use no analytics or advertising cookies.
       </p>
 
       <h2 className={h2ClassName}>How long we keep it</h2>
