@@ -14,10 +14,9 @@ export const pl: Messages = {
     profile: 'Mój profil',
     howItWorks: 'Jak to działa',
     contact: 'Kontakt',
-    policies: 'Zasady',
+    policies: 'Regulaminy',
     settings: 'Ustawienia',
     metalogrom: 'Metalogrom',
-    opensInNewTab: '(otwiera się w nowej karcie)',
   },
   cities: {
     searchLabel: 'Wyszukaj swoje miasto',

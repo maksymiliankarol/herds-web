@@ -15,7 +15,6 @@ export const en = {
     policies: 'Policies',
     settings: 'Settings',
     metalogrom: 'Metalogrom',
-    opensInNewTab: '(opens in new tab)',
   },
   cities: {
     searchLabel: 'Search for your city',

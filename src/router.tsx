@@ -23,8 +23,8 @@ export const router = createBrowserRouter([
         errorElement: <ErrorPage />,
         children: [
           { index: true, element: <Home /> },
-          { path: "/cities", element: <Cities /> },
-          { path: "/profile", element: <MyProfile /> },
+          { path: "cities", element: <Cities /> },
+          { path: "profile", element: <MyProfile /> },
           { path: "settings", element: <Settings /> },
           {
             element: <RequireProfile />,

@@ -18,7 +18,7 @@ const tiles: Tile[] = [
   { label: "cities", to: "/cities", className: "col-span-2 row-span-2 text-4xl md:text-5xl bg-red text-white" },
   { label: "profile", to: "/profile", className: "col-span-2 text-2xl md:text-3xl bg-blue text-white" },
   { label: "settings", to: "/settings", className: "text-xl bg-blue text-white" },
-  { label: "howItWorks", to: "/how-it-works", className: "text-xl bg-sage text-white" },
+  { label: "howItWorks", to: "/how-it-works", className: "text-xl bg-grey text-white" },
   { label: "contact", to: "/contact", className: "text-xl bg-white text-black" },
   { label: "policies", to: "/policies", className: "text-xl bg-white text-black" },
   { label: "metalogrom", to: "https://metalogrom.com", className: "col-span-2 text-2xl md:text-3xl bg-offblack text-white", external: true },
