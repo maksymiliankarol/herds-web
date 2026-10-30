@@ -27,7 +27,6 @@ export const pl: Messages = {
   city: {
     noRooms: 'Brak pokoi',
     roomNotFound: 'Nie znaleziono pokoju',
-    cityNotFound: 'Nie znaleziono miasta',
     couldNotLoadRooms: 'Nie udało się wczytać pokoi',
     rooms: 'Pokoje',
     closeRooms: 'Zamknij listę pokoi',
@@ -101,11 +100,12 @@ export const pl: Messages = {
     unknown: 'Nie udało się dołączyć do pokoju',
   },
   errors: {
-    tooManyRequests: 'Zbyt wiele żądań, spróbuj za minutę',
-    cannotReach: 'Brak połączenia z serwerem, sprawdź internet',
+    rate_limited: 'Zbyt wiele żądań, spróbuj za minutę',
+    city_not_found: 'Nie znaleziono miasta',
+    room_not_found: 'Nie znaleziono pokoju',
+    network: 'Brak połączenia z serwerem, sprawdź internet',
   },
 
-  // api
   chatErrors: {
     slow_down: 'Zwolnij',
     too_many_messages: 'Zbyt wiele wiadomości',

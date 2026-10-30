@@ -25,7 +25,6 @@ export const en = {
   city: {
     noRooms: 'No rooms yet',
     roomNotFound: 'Room not found',
-    cityNotFound: 'City not found',
     couldNotLoadRooms: 'Could not load rooms',
     rooms: 'Rooms',
     closeRooms: 'Close rooms',
@@ -99,11 +98,14 @@ export const en = {
     unknown: 'Could not join the room',
   },
   errors: {
-    tooManyRequests: 'Too many requests, try again in a minute',
-    cannotReach: 'Cannot reach the server, check your connection',
+    // sent by herds-api
+    rate_limited: 'Too many requests, try again in a minute',
+    city_not_found: 'City not found',
+    room_not_found: 'Room not found',
+    // raised by the client itself
+    network: 'Cannot reach the server, check your connection',
   },
 
-  // api
   chatErrors: {
     slow_down: 'Slow down',
     too_many_messages: 'Too many messages',

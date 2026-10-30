@@ -1,11 +1,27 @@
 const API_URL: string = import.meta.env.VITE_API_URL
 
+// Codes the server sends that this client has text for. Keep in sync with
+// herds-api (src/lib/error-codes.ts). The server sends more (internal, not_found,
+// invalid_input, admin codes): those have no text on purpose, so each screen
+// shows its own fallback wording for them.
+export type ServerErrorCode = 'rate_limited' | 'city_not_found' | 'room_not_found'
+
+// Raised here, never sent by the server
+export type ClientErrorCode = 'network'
+
+export type ErrorCode = ServerErrorCode | ClientErrorCode
+
 export class ApiError extends Error {
   status: number
+  // As sent by the server: can be a code this client doesn't know, or null
+  // (no body, or a proxy or error page in the way).
+  code: string | null
 
-  constructor(status: number, message?: string) {
-    super(message ?? `Request failed: ${status}`)
+  constructor(status: number, code: string | null = null) {
+    // for the console only: users get text from describeError
+    super(code ?? `Request failed: ${status}`)
     this.status = status
+    this.code = code
   }
 }
 
@@ -19,13 +35,13 @@ async function request<T>(path: string, init: RequestInit = {}, token?: string):
   } catch (e) {
     // an aborted request was superseded: let the caller see the abort and ignore it
     if (init.signal?.aborted) throw e
-    throw new ApiError(0, 'Network error') // status 0: no response at all
+    throw new ApiError(0, 'network') // status 0: no response at all
   }
-  
+
   if (!res.ok) {
-    // the API answers failures with { "error": "..." }
-    const data = (await res.json().catch(() => null)) as { error?: string } | null
-    throw new ApiError(res.status, data?.error)
+    // the API answers failures with { "code": "..." }
+    const data = (await res.json().catch(() => null)) as { code?: unknown } | null
+    throw new ApiError(res.status, typeof data?.code === 'string' ? data.code : null)
   }
 
   if (res.status === 204) return undefined as T

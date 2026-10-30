@@ -47,11 +47,7 @@ export function City() {
 
   let main: ReactNode
   if (error) {
-    main = (
-      <Notice error>
-        {describeError(t, error, t.city.couldNotLoadRooms, { 404: t.city.cityNotFound })}
-      </Notice>
-    )
+    main = <Notice error>{describeError(t, error, t.city.couldNotLoadRooms)}</Notice>
   } else if (!rooms) {
     main = <Notice>{t.common.loading}</Notice>
   } else if (rooms.length === 0) {
