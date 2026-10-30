@@ -1,3 +1,5 @@
+import type { Messages } from '../locales/en'
+
 // Close codes: must match the server (room.ts and routes/ws.ts)
 export const CLOSE_INVALID_NAME = 4400
 export const CLOSE_VERIFICATION_FAILED = 4403
@@ -8,37 +10,22 @@ export const MAX_FAILED_CONNECTS = 3
 
 export type RejectionAction = 'retry' | 'change-name'
 
-export type Rejection = { message: string; actions: RejectionAction[] }
+export type Rejection = {
+  key: keyof Messages['rejections']
+  actions: RejectionAction[]
+}
 
 const KNOWN: Record<number, Rejection> = {
-  [CLOSE_INVALID_NAME]: {
-    message: 'This name is not valid',
-    actions: ['change-name'],
-  },
-  [CLOSE_VERIFICATION_FAILED]: {
-    message: 'Verification failed',
-    actions: ['retry'],
-  },
-  [CLOSE_NAME_TAKEN]: {
-    message: 'This name is already in use in this room (another tab?)',
-    actions: ['retry', 'change-name'],
-  },
-  [CLOSE_ROOM_FULL]: {
-    message: 'This room is full, try again soon',
-    actions: ['retry'],
-  },
-  [CLOSE_IP_LIMIT]: {
-    message: 'Too many connections from your network',
-    actions: ['retry'],
-  },
+  [CLOSE_INVALID_NAME]: { key: 'invalidName', actions: ['change-name'] },
+  [CLOSE_VERIFICATION_FAILED]: { key: 'verificationFailed', actions: ['retry'] },
+  [CLOSE_NAME_TAKEN]: { key: 'nameTaken', actions: ['retry', 'change-name'] },
+  [CLOSE_ROOM_FULL]: { key: 'roomFull', actions: ['retry'] },
+  [CLOSE_IP_LIMIT]: { key: 'ipLimit', actions: ['retry'] },
 }
 
-// serverText is the reason the server sent. It's only shown for codes we don't know.
-export function describeRejection(code: number, serverText?: string): Rejection {
-  return KNOWN[code] ?? { message: serverText || 'Could not join the room', actions: ['retry'] }
-}
+export const describeRejection = (code: number): Rejection =>
+  KNOWN[code] ?? { key: 'unknown', actions: ['retry'] }
 
-export const GAVE_UP: Rejection = {
-  message: 'Could not connect to the room',
-  actions: ['retry'],
-}
+export const GAVE_UP: Rejection = { key: 'gaveUp', actions: ['retry'] }
+
+export const rejectionText = (t: Messages, r: Rejection) => t.rejections[r.key]

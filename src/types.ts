@@ -1,10 +1,17 @@
 export type Message = { id: number; author: string; body: string; created_at: number }
 
+export type ChatErrorCode =
+  | 'slow_down'
+  | 'too_many_messages'
+  | 'message_too_large'
+  | 'invalid_json'
+  | 'invalid_body'
+
 export type ServerEvent =
   | { type: 'history'; messages: Message[] }
   | { type: 'message'; message: Message }
-  | { type: 'error'; error: string }
-  | { type: 'rejected'; code: number; error: string }
+  | { type: 'error'; code: ChatErrorCode }
+  | { type: 'rejected'; code: number }
 
 export type City = { slug: string; name: string; country_code: string; country_name: string }
 

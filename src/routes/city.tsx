@@ -49,7 +49,7 @@ export function City() {
   if (error) {
     main = (
       <Notice error>
-        {describeError(error, t.city.couldNotLoadRooms, { 404: t.city.cityNotFound })}
+        {describeError(t, error, t.city.couldNotLoadRooms, { 404: t.city.cityNotFound })}
       </Notice>
     )
   } else if (!rooms) {
@@ -115,7 +115,7 @@ export function City() {
         {/* mobile room picker: full screen, scrolls on its own */}
         <dialog
           ref={pickerRef}
-          aria-label="Rooms"
+          aria-label={t.city.rooms}
           onClose={() => setPickerOpen(false)}
           className="m-0 size-full max-h-none max-w-none flex-col gap-4 bg-offwhite p-4 text-foreground open:flex md:hidden"
         >
@@ -123,7 +123,7 @@ export function City() {
             <h2 className="text-xl">{cityName ?? t.city.rooms}</h2>
             <button
               type="button"
-              aria-label="Close rooms"
+              aria-label={t.city.closeRooms}
               className="border-2 border-black bg-white p-2"
               onClick={() => setPickerOpen(false)}
             >

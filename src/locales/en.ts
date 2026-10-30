@@ -21,6 +21,7 @@ export const en = {
     searchLabel: 'Search for your city',
     searchPlaceholder: 'Search for your city...',
     noCities: 'No cities found',
+    couldNotLoad: 'Could not load cities',
   },
   city: {
     noRooms: 'No rooms yet',
@@ -71,6 +72,45 @@ export const en = {
   },
   errorPage: {
     fallback: 'Something went wrong',
+  },
+
+  // components
+  chat: {
+    messagesLabel: 'Messages',
+    placeholder: 'Write message here...',
+    send: 'Send',
+    connecting: 'Connecting...',
+    reconnecting: 'Reconnecting...',
+    tryAgain: 'Try again',
+    changeName: 'Change name',
+  },
+  news: {
+    couldNotLoad: 'Could not load news',
+    noNews: 'No news yet',
+  },
+
+  // lib
+  rejections: {
+    invalidName: 'This name is not valid',
+    verificationFailed: 'Verification failed',
+    nameTaken: 'This name is already in use in this room (another tab?)',
+    roomFull: 'This room is full, try again soon',
+    ipLimit: 'Too many connections from your network',
+    gaveUp: 'Could not connect to the room',
+    unknown: 'Could not join the room',
+  },
+  errors: {
+    tooManyRequests: 'Too many requests, try again in a minute',
+    cannotReach: 'Cannot reach the server, check your connection',
+  },
+
+  // api
+  chatErrors: {
+    slow_down: 'Slow down',
+    too_many_messages: 'Too many messages',
+    message_too_large: 'Message too large',
+    invalid_json: 'Could not send the message',
+    invalid_body: 'Invalid message',
   },
 }
 

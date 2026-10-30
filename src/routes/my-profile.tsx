@@ -11,13 +11,13 @@ export function MyProfile() {
   const from = (location.state as { from?: string } | null)?.from ?? '/cities'
 
   const [name, setName] = useState(() => getProfileName() ?? '')
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<'nameReserved' | 'nameInvalid' | null>(null)
 
-const save = (e: SubmitEvent<HTMLFormElement>) => {
+  const save = (e: SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
     const value = name.trim()
     if (!isValidName(value)) {
-      setError(isReservedName(value) ? 'This name is reserved' : '2-20 characters: letters, digits, _ or -')
+      setError(isReservedName(value) ? 'nameReserved' : 'nameInvalid')
       return
     }
     setProfileName(value)
@@ -55,7 +55,7 @@ const save = (e: SubmitEvent<HTMLFormElement>) => {
         </p>
         {error && (
           <p id="name-error" role="alert" className="text-error">
-            {error}
+            {t.myProfile[error]}
           </p>
         )}
         <button className="bg-green text-white px-4 py-2 border-2 border-black cursor-pointer hover:brightness-75 disabled:opacity-50">

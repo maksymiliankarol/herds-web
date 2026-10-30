@@ -5,6 +5,8 @@ import { useRoom } from '../hooks/use-room'
 import { useStickToBottom } from '../hooks/use-stick-to-bottom'
 import { useTurnstileToken } from '../hooks/use-turnstile-token'
 import Turnstile from './turnstile'
+import { useI18n } from '../lib/i18n-context'
+import { rejectionText } from '../lib/rejections'
 
 const MAX_BODY = 2000 // must match the server (Room)
 
@@ -16,6 +18,7 @@ interface ChatProps {
 }
 
 export function Chat({ city, room, name, className = '' }: ChatProps) {
+  const { t, lang } = useI18n()
   const location = useLocation()
   const { getToken, widgetProps } = useTurnstileToken()
   const { messages, status, error, notice, rejection, retry, send } = useRoom(
@@ -42,19 +45,19 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
     <section className={`flex flex-col gap-4 min-h-0 ${className}`}>
       {status === 'rejected' && rejection ? (
         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-          <p className="text-error first-letter:uppercase">{rejection.message}</p>
+          <p className="text-error first-letter:uppercase">{rejectionText(t, rejection)}</p>
           {rejection.actions.includes('retry') && (
             <button
               type="button"
               className="bg-yellow border-2 border-black px-3 py-1 cursor-pointer hover:brightness-75"
               onClick={retry}
             >
-              Try again
+              {t.chat.tryAgain}
             </button>
           )}
           {rejection.actions.includes('change-name') && (
             <Link to="/profile" state={{ from: location.pathname }} className="underline">
-              Change name
+              {t.chat.changeName}
             </Link>
           )}
         </div>
@@ -62,9 +65,9 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
         status !== 'open' && (
           <>
             <p className="opacity-60">
-              {status === 'connecting' ? 'Connecting...' : 'Reconnecting...'}
+              {status === 'connecting' ? t.chat.connecting : t.chat.reconnecting}
             </p>
-            {error && <p className="text-error first-letter:uppercase">{error}</p>}
+            {error && <p className="text-error first-letter:uppercase">{rejectionText(t, error)}</p>}
           </>
         )
       )}
@@ -73,7 +76,7 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
         ref={listRef}
         onScroll={onScroll}
         role="log"
-        aria-label="Messages"
+        aria-label={t.chat.messagesLabel}
         aria-live={announce ? 'polite' : 'off'}
         className="bg-white w-full flex-1 min-h-0 overflow-y-auto border-2 p-3 flex flex-col gap-3"
       >
@@ -93,7 +96,7 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
               >
                 {m.body}
               </div>
-              <small className="opacity-60">{formatMessageTime(m.created_at)}</small>
+              <small className="opacity-60">{formatMessageTime(m.created_at, lang)}</small>
             </li>
           )
         })}
@@ -118,7 +121,7 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
       >
         <input
           className="w-full border-2 bg-white px-3 py-2"
-          placeholder="Write message here..."
+          placeholder={t.chat.placeholder}
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           maxLength={MAX_BODY}
@@ -128,7 +131,7 @@ export function Chat({ city, room, name, className = '' }: ChatProps) {
           className="bg-blue text-white px-4 py-2 border-2 border-black cursor-pointer hover:brightness-75 disabled:opacity-50"
           disabled={status !== 'open'}
         >
-          Send
+          {t.chat.send}
         </button>
       </form>
 

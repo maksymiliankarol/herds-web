@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import type { Message, ServerEvent } from '../types'
+import type { ChatErrorCode, Message, ServerEvent } from '../types'
 import { wsUrl } from '../lib/api'
 import {
   CLOSE_INVALID_NAME,
@@ -35,11 +35,11 @@ export function useRoom(
   const [messages, setMessages] = useState<Message[]>([])
   const [status, setStatus] = useState<Status>('connecting')
   // error: a connection problem, shown until the next successful connect
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<Rejection | null>(null)
   // rejection: why a first connection was refused for good (the user retries by hand)
   const [rejection, setRejection] = useState<Rejection | null>(null)
   // notice: a transient chat error ("slow down"), cleared after a few seconds
-  const [notice, setNotice] = useState<{ text: string } | null>(null)
+  const [notice, setNotice] = useState<{ code: ChatErrorCode } | null>(null)
   const [retryKey, setRetryKey] = useState(0)
   const wsRef = useRef<WebSocket | null>(null)
 
@@ -68,7 +68,7 @@ export function useRoom(
       // so the user isn't served a new challenge every second, and offer a manual retry.
       if (attempt >= MAX_FAILED_CONNECTS) {
         rejected = true
-        setError(GAVE_UP.message)
+        setError(GAVE_UP)
         setRejection(GAVE_UP)
         setStatus('rejected')
         return
@@ -87,7 +87,7 @@ export function useRoom(
         token = await getToken()
       } catch {
         if (stopped) return
-        setError(describeRejection(CLOSE_VERIFICATION_FAILED).message)
+        setError(describeRejection(CLOSE_VERIFICATION_FAILED))
         scheduleRetry()
         return
       }
@@ -126,8 +126,8 @@ export function useRoom(
         } else if (event.type === 'message') {
           setMessages((prev) => [...prev, event.message].slice(-MAX_MESSAGES))
         } else if (event.type === 'rejected') {
-          const info = describeRejection(event.code, event.error)
-          setError(info.message)
+          const info = describeRejection(event.code)
+          setError(info)
           // A refused first connection won't succeed on its own, except a failed
           // verification: the next attempt brings a fresh token.
           if (
@@ -139,7 +139,7 @@ export function useRoom(
             setStatus('rejected')
           }
         } else {
-          setNotice({ text: event.error })
+          setNotice({ code: event.code })
         }
       }
 
@@ -149,11 +149,11 @@ export function useRoom(
 
         // fallback in case the "rejected" event was missed
         if (e.code === CLOSE_INVALID_NAME || (e.code === CLOSE_NAME_TAKEN && !established)) {
-          const info = describeRejection(e.code, e.reason)
+          const info = describeRejection(e.code)
           rejected = true
           setRejection(info)
           setStatus('rejected')
-          setError(info.message)
+          setError(info)
           return
         }
 
@@ -188,5 +188,5 @@ export function useRoom(
     return true
   }, [])
 
-  return { messages, status, error, notice: notice?.text ?? null, rejection, retry, send }
+  return { messages, status, error, notice: notice?.code ?? null, rejection, retry, send }
 }

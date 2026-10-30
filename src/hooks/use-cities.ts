@@ -1,12 +1,11 @@
 import { useEffect, useState } from 'react'
 import { get } from '../lib/api'
 import type { City } from '../types'
-import { describeError } from '../lib/errors'
 
 export function useCities(query: string) {
   const [cities, setCities] = useState<City[]>([])
   const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
+  const [error, setError] = useState<unknown>(null)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -23,7 +22,8 @@ export function useCities(query: string) {
         setError(null)
       } catch (e) {
         if (controller.signal.aborted) return // superseded by a newer request
-        setError(describeError(e, 'Could not load cities'))      } finally {
+        setError(e)
+      } finally {
         if (!controller.signal.aborted) setLoading(false)
       }
     }, query ? 250 : 0)

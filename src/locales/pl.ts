@@ -23,6 +23,7 @@ export const pl: Messages = {
     searchLabel: 'Wyszukaj swoje miasto',
     searchPlaceholder: 'Wyszukaj swoje miasto...',
     noCities: 'Nie znaleziono miast',
+    couldNotLoad: 'Nie udało się wczytać miast',
   },
   city: {
     noRooms: 'Brak pokoi',
@@ -73,5 +74,44 @@ export const pl: Messages = {
   },
   errorPage: {
     fallback: 'Coś poszło nie tak',
+  },
+
+  // components
+  chat: {
+    messagesLabel: 'Wiadomości',
+    placeholder: 'Napisz wiadomość...',
+    send: 'Wyślij',
+    connecting: 'Łączenie...',
+    reconnecting: 'Ponowne łączenie...',
+    tryAgain: 'Spróbuj ponownie',
+    changeName: 'Zmień imię',
+  },
+  news: {
+    couldNotLoad: 'Nie udało się wczytać aktualności',
+    noNews: 'Brak aktualności',
+  },
+
+  // lib
+  rejections: {
+    invalidName: 'To imię jest nieprawidłowe',
+    verificationFailed: 'Weryfikacja nie powiodła się',
+    nameTaken: 'To imię jest już używane w tym pokoju (inna karta?)',
+    roomFull: 'Ten pokój jest pełny, spróbuj za chwilę',
+    ipLimit: 'Zbyt wiele połączeń z Twojej sieci',
+    gaveUp: 'Nie udało się połączyć z pokojem',
+    unknown: 'Nie udało się dołączyć do pokoju',
+  },
+  errors: {
+    tooManyRequests: 'Zbyt wiele żądań, spróbuj za minutę',
+    cannotReach: 'Brak połączenia z serwerem, sprawdź internet',
+  },
+
+  // api
+  chatErrors: {
+    slow_down: 'Zwolnij',
+    too_many_messages: 'Zbyt wiele wiadomości',
+    message_too_large: 'Wiadomość jest za długa',
+    invalid_json: 'Nie udało się wysłać wiadomości',
+    invalid_body: 'Nieprawidłowa wiadomość',
   },
 }
