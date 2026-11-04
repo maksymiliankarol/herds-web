@@ -1,0 +1,19 @@
+import { createBrowserRouter } from "react-router";
+import Layout from "./layouts/layout";
+import Home from "./pages/home";
+import Cities from "./pages/cities";
+import City from "./pages/city";
+import MyProfile from "./pages/my-profile";
+
+export const router = createBrowserRouter([
+  {
+    path: "/",
+    Component: Layout,
+    children: [
+      { index: true, Component: Home },
+      { path: "cities", Component: Cities },
+      { path: "city/cityname", Component: City },
+      { path: "my-profile", Component: MyProfile }
+    ]
+  }
+])
