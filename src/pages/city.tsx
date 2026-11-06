@@ -1,35 +1,66 @@
+import { useEffect, useState } from "react";
+import { Navigate, useLocation, useParams, useSearchParams } from "react-router";
+import { getErrorKind, getRooms, type ErrorKind, type Room } from "../lib/api";
+import { roomName } from "../lib/room-name";
+import { getUsername } from "../lib/username";
+import RoomList from "../components/room-list";
+import Chat from "../components/chat";
+import News from "../components/news";
+import { useLocale } from "../locales";
+
+type View = "chat" | "rooms" | "news";
+
 export default function City() {
+  const { t } = useLocale();
+  const { id } = useParams();
+  const [params] = useSearchParams();
+  const { pathname, search } = useLocation();
+  const roomId = params.get("room");
+  const [rooms, setRooms] = useState<Room[] | null>(null);
+  const [error, setError] = useState<ErrorKind | null>(null);
+  const [view, setView] = useState<View>(roomId ? "chat" : "rooms");
+
+  useEffect(() => {
+    let ignore = false;
+    setRooms(null);
+    setError(null);
+    getRooms(Number(id))
+      .then((result) => {
+        if (!ignore) setRooms(result);
+      })
+      .catch((e) => {
+        if (!ignore) setError(getErrorKind(e));
+      });
+
+    return () => {
+      ignore = true;
+    };
+  }, [id]);
+
+  const username = getUsername();
+  if (roomId && !username) {
+    return <Navigate to="/my-profile" state={{ from: pathname + search, reason: "required" }} replace />;
+  }
+
+  const room = rooms?.find((r) => String(r.id) === roomId);
+
   return (
-    <div className="grid-two lg">
-      <section className="chat column">
-        <div className="chat-header">
-          Room name
-        </div>
-        <div className="scroll">
-          <div className="chat-message other">Hi! Which city are you looking at?</div>
-          <div className="chat-message my">Warsaw.</div>
-          <div className="chat-message other">
-            Nice choice. It has a lot to offer, so it helps to know what you care about
-            most: food, history, nightlife, or just a quiet place to work from.
-          </div>
-          <div className="chat-message my">
-            Mostly quiet places to work, and good coffee nearby.
-          </div>
-          <div className="chat-message other">Got it.</div>
-        </div>
-        <div className="chat-input">
-          <input placeholder="Type here..."/>
-          <button>
-            Send
-          </button>
-        </div>
-      </section>
-      <section className="scroll news">
-        <div className="news-item column">
-          <p>Example city news goes here</p>
-          <p>{"- "}Date goes here</p>
-        </div>
-      </section>
+    <div className={`grid-three xl view-${view}`}>
+      <div className="mobile-bar">
+        <button onClick={() => setView("rooms")}>{room ? roomName(room.title) : t.city.rooms}</button>
+        <button className="success" onClick={() => setView(view === "news" ? "chat" : "news")}>
+          {view === "news" ? t.city.chat : t.city.news}
+        </button>
+      </div>
+      <RoomList rooms={rooms} error={error} onSelect={() => setView("chat")} />
+      {room && username ? (
+        <>
+          <Chat key={room.id} room={room} username={username} active={view === "chat"} />
+          <News roomId={room.id} />
+        </>
+      ) : (
+        <p className="select-room">{t.city.selectRoom}</p>
+      )}
     </div>
   );
 }

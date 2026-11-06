@@ -1,22 +1,36 @@
+import { useState } from "react";
 import { NavLink, Outlet } from "react-router";
 import Logo from "../components/logo";
-import LangSwitch from "../components/lang-switch";
 import { useLocale } from "../locales";
 
 const navClass = ({ isActive }: { isActive: boolean }) =>
   isActive ? "current" : undefined;
 
 export default function Layout() {
-  const { t } = useLocale()
+  const { t } = useLocale();
+  const [open, setOpen] = useState(false);
+  const close = () => setOpen(false);
+
   return (
     <div className="layout">
       <header>
         <Logo />
-        <nav>
-          <NavLink className={navClass} to="/" end>{t.layout.home}</NavLink>
-          <NavLink className={navClass} to="/cities">{t.layout.cities}</NavLink>
-          <NavLink className={navClass} to="/my-profile">{t.layout.myProfile}</NavLink>
-          <LangSwitch />
+        <button className="menu-button" aria-expanded={open} onClick={() => setOpen(true)}>
+          {t.layout.menu}
+        </button>
+        <nav className={open ? "open" : undefined}>
+          <div className="menu-header">
+            <span className="menu-header-label">{t.layout.menu}</span>
+            <button className="menu-close" aria-label={t.layout.close} onClick={close}>
+              ×
+            </button>
+          </div>
+          <div className="menu-items">
+            <NavLink className={navClass} to="/" end onClick={close}>{t.layout.home}</NavLink>
+            <NavLink className={navClass} to="/cities" onClick={close}>{t.layout.cities}</NavLink>
+            <NavLink className={navClass} to="/my-profile" onClick={close}>{t.layout.myProfile}</NavLink>
+            <NavLink className={navClass} to="/settings" onClick={close}>{t.layout.settings}</NavLink>
+          </div>
         </nav>
       </header>
       <main>

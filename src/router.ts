@@ -4,6 +4,7 @@ import Home from "./pages/home";
 import Cities from "./pages/cities";
 import City from "./pages/city";
 import MyProfile from "./pages/my-profile";
+import Settings from "./pages/settings";
 
 export const router = createBrowserRouter([
   {
@@ -12,8 +13,9 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: Home },
       { path: "cities", Component: Cities },
-      { path: "city/cityname", Component: City },
-      { path: "my-profile", Component: MyProfile }
+      { path: "city/:id", Component: City },
+      { path: "my-profile", Component: MyProfile },
+      { path: "settings", Component: Settings }
     ]
   }
 ])
