@@ -12,13 +12,21 @@ type Entry = ChatEvent & { id: number };
 
 type Props = { room: Room; username: string; active: boolean };
 
+const CLOSE_REASONS: Record<number, "removed" | "roomFull" | "tooManyConnections"> = {
+  4403: "removed",
+  4503: "roomFull",
+  4290: "tooManyConnections",
+};
+
+const closeReason = (code: number) => CLOSE_REASONS[code] ?? "disconnected";
+
 export default function Chat({ room, username, active }: Props) {
   const { t } = useLocale();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
   const [events, setEvents] = useState<Entry[]>([]);
   const [online, setOnline] = useState(0);
-  const [disconnected, setDisconnected] = useState(false);
+  const [disconnected, setDisconnected] = useState<string | null>(null);
   const [text, setText] = useState("");
   const wsRef = useRef<WebSocket | null>(null);
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -42,8 +50,9 @@ export default function Chat({ room, username, active }: Props) {
     ws.onclose = (e) => {
       if (e.code === 4009) {
         navigate("/my-profile", { state: { from: pathname + search, reason: "taken" }, replace: true });
+      } else {
+        setDisconnected(closeReason(e.code));
       }
-      else setDisconnected(true);
     };
 
     return () => {
@@ -98,9 +107,9 @@ export default function Chat({ room, username, active }: Props) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           maxLength={500}
-          disabled={disconnected}
+          disabled={!!disconnected}
         />
-        <button disabled={disconnected}>Send</button>
+        <button disabled={!!disconnected}>Send</button>
       </form>
     </section>
   );

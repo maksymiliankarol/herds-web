@@ -37,6 +37,9 @@ const pl: Messages = {
   },
   chat: {
     disconnected: "Rozłączono z pokojem.",
+    removed: "Moderator usunął Cię z pokoju.",
+    roomFull: "Ten pokój jest pełny. Spróbuj ponownie później.",
+    tooManyConnections: "Zbyt wiele połączeń z Twojej sieci.",
     online: "online",
   },
   settings: {
