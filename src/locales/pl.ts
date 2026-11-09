@@ -41,6 +41,8 @@ const pl: Messages = {
     roomFull: "Ten pokój jest pełny. Spróbuj ponownie później.",
     tooManyConnections: "Zbyt wiele połączeń z Twojej sieci.",
     online: "online",
+    type: "Pisz tutaj...",
+    send: "Wyślij",
   },
   settings: {
     title: "Ustawienia",

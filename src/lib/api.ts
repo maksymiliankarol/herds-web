@@ -4,8 +4,7 @@ const API_URL = import.meta.env.VITE_API_URL as string;
 
 export type City = {
   id: number;
-  city: string;
-  city_label: string;
+  title: string;
   country_code: string;
 };
 

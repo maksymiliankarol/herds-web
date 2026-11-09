@@ -39,6 +39,8 @@ const en = {
     roomFull: "This room is full. Try again later.",
     tooManyConnections: "Too many connections from your network.",
     online: "online",
+    type: "Type here...",
+    send: "Send",
   },
   settings: {
     title: "Settings",

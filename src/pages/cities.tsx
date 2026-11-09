@@ -54,7 +54,7 @@ export default function Cities() {
           <ul>
             {cities?.map((c) => (
               <li key={c.id}>
-                <Link to={`/city/${c.id}`}>{c.city_label}</Link>
+                <Link to={`/city/${c.id}`}>{c.title}</Link>
               </li>
             ))}
           </ul>
