@@ -103,13 +103,13 @@ export default function Chat({ room, username, active }: Props) {
       </div>
       <form className="chat-input" onSubmit={handleSubmit}>
         <input
-          placeholder="Type here..."
+          placeholder={t.chat.type}
           value={text}
           onChange={(e) => setText(e.target.value)}
           maxLength={500}
           disabled={!!disconnected}
         />
-        <button disabled={!!disconnected}>Send</button>
+        <button disabled={!!disconnected}>{t.chat.send}</button>
       </form>
     </section>
   );

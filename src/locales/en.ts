@@ -8,6 +8,17 @@ const en = {
     menu: "Menu",
     close: "Close menu",
   },
+  home: {
+    welcome: "Welcome to Herds",
+    intro: "A good place to start is to tell us your name (or how others should see you). You can",
+    profileLink: "do it here.",
+    introPartTwo: "Then",
+    citiesLink: "find your city",
+    introPartThree: ", join, and talk with your people.",
+    contact: "Contact",
+    terms: "Terms of Service",
+    privacy: "Privacy Policy"
+  },
   cities: {
     title: "Cities",
     intro: "Find your city and join a room.",

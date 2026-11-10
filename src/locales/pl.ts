@@ -10,6 +10,17 @@ const pl: Messages = {
     menu: "Menu",
     close: "Zamknij menu",
   },
+  home: {
+    welcome: "Witaj w Herds",
+    intro: "Najlepiej zacząć od podania Twojego imienia (będzie widoczne przy Twoich wiadomościach i nie musi być prawdziwe). Możesz to zrobić",
+    profileLink: "tutaj.",
+    introPartTwo: "Potem po prostu",
+    citiesLink: "znajdź swoje miasto",
+    introPartThree: ", dołącz do wybranego pokoju i rozmawiaj z mieszkańcami.",
+    contact: "Kontakt",
+    terms: "Regulamin",
+    privacy: "Polityka prywatności"
+  },
   cities: {
     title: "Miasta",
     intro: "Znajdź swoje miasto i dołącz do pokoju.",

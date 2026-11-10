@@ -47,9 +47,11 @@ export default function City() {
   return (
     <div className={`grid-three xl view-${view}`}>
       <div className="mobile-bar">
-        <button onClick={() => setView("rooms")}>{room ? roomName(room.title) : t.city.rooms}</button>
         <button onClick={() => setView(view === "rooms" && room ? "chat" : "rooms")}>
           {room ? roomName(room.title) : t.city.rooms}
+        </button>
+        <button className="success" onClick={() => setView(view === "news" ? "chat" : "news")}>
+          {view === "news" ? t.city.chat : t.city.news}
         </button>
       </div>
       <RoomList rooms={rooms} error={error} onSelect={() => setView("chat")} />
