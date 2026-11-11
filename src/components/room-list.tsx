@@ -1,17 +1,23 @@
 import { Link } from "react-router";
-import type { ErrorKind, Room } from "../lib/api";
+import type { City, ErrorKind, Room } from "../lib/api";
 import { useLocale } from "../locales";
 
-type Props = { rooms: Room[] | null; error: ErrorKind | null; onSelect: () => void };
+type Props = { 
+  city: City | null;
+  rooms: Room[] | null; 
+  error: ErrorKind | null; 
+  onSelect: () => void 
+};
 
 // "food_chinese" sorts right after "food", so a sorted flat list already reads as a tree
 const byTitle = (a: Room, b: Room) => a.title.localeCompare(b.title);
 
-export default function RoomList({ rooms, error, onSelect }: Props) {
+export default function RoomList({ city, rooms, error, onSelect }: Props) {
   const { t } = useLocale();
 
   return (
     <section className="scroll rooms">
+      {city && <strong>{city.title}</strong>}
       {error && <p>{t.errors[error]}</p>}
       {rooms?.length === 0 && <p>{t.city.noRooms}</p>}
       <ul>

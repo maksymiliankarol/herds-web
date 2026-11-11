@@ -51,7 +51,6 @@ const pl: Messages = {
     removed: "Moderator usunął Cię z pokoju.",
     roomFull: "Ten pokój jest pełny. Spróbuj ponownie później.",
     tooManyConnections: "Zbyt wiele połączeń z Twojej sieci.",
-    online: "online",
     type: "Pisz tutaj...",
     send: "Wyślij",
   },

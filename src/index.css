@@ -435,9 +435,12 @@ button.destructive:hover {
   padding: 1rem;
 }
 
+.rooms h2 {
+  font-weight: 600;
+}
+
 .rooms li::first-letter,
-.chat-header::first-letter,
-.mobile-bar button::first-letter {
+.chat-room::first-letter {
   text-transform: uppercase;
 }
 
@@ -448,6 +451,14 @@ button.destructive:hover {
 
 .mobile-bar {
   display: none;
+}
+
+.chat-city {
+  display: none;
+}
+
+.chat-room {
+  display: inline-block; /* ::first-letter doesn't apply to plain inline elements */
 }
 
 @media (max-width: 768px) {
@@ -469,6 +480,10 @@ button.destructive:hover {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .chat-city {
+    display: inline;
   }
 
   .select-room {

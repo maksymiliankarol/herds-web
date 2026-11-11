@@ -10,7 +10,12 @@ let nextId = 0;
 
 type Entry = ChatEvent & { id: number };
 
-type Props = { room: Room; username: string; active: boolean };
+type Props = { 
+    city: string;
+    room: Room; 
+    username: string; 
+    active: boolean 
+  };
 
 const CLOSE_REASONS: Record<number, "removed" | "roomFull" | "tooManyConnections"> = {
   4403: "removed",
@@ -20,7 +25,7 @@ const CLOSE_REASONS: Record<number, "removed" | "roomFull" | "tooManyConnections
 
 const closeReason = (code: number) => CLOSE_REASONS[code] ?? "disconnected";
 
-export default function Chat({ room, username, active }: Props) {
+export default function Chat({ city, room, username, active }: Props) {
   const { t } = useLocale();
   const navigate = useNavigate();
   const { pathname, search } = useLocation();
@@ -82,8 +87,9 @@ export default function Chat({ room, username, active }: Props) {
   return (
     <section className="chat column">
       <div className="chat-header">
-        {roomName(room.title)}
-        {online > 0 && ` · ${t.chat.online}: ${online}`}
+        <span className="chat-city">{city} · </span>
+        <span className="chat-room">{roomName(room.title)}</span>
+        {online > 0 && ` · ${online}`}
       </div>
       {disconnected && <p>{t.chat.disconnected}</p>}
       <div className="scroll">

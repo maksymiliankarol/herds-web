@@ -20,7 +20,15 @@ export default function Home() {
             <a href="/cities">{t.home.citiesLink}</a>
             {t.home.introPartThree}
           </p>
+        </section>
+        <section>
           <ul>
+            <li>
+              <span>{t.home.contact}: </span>
+              <a href="mailto:herds@metalogrom.com">
+                herds@metalogrom.com
+              </a>
+            </li>
             <li>
               <a
                 href={sitePath("/software/herds/terms")}

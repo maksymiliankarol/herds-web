@@ -49,7 +49,6 @@ const en = {
     removed: "You were removed from the room by a moderator.",
     roomFull: "This room is full. Try again later.",
     tooManyConnections: "Too many connections from your network.",
-    online: "online",
     type: "Type here...",
     send: "Send",
   },

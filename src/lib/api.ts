@@ -52,6 +52,12 @@ export async function searchCities(q: string): Promise<City[]> {
   return res.json();
 };
 
+export async function getCity(id: number): Promise<City> {
+  const res = await fetch(`${API_URL}/cities/${id}`);
+  if (!res.ok) throw new ApiError(res.status);
+  return res.json();
+};
+
 export async function getRooms(cityId: number): Promise<Room[]> {
   const res = await fetch(`${API_URL}/rooms?${new URLSearchParams({ city_id: String(cityId) })}`);
   if (!res.ok) throw new ApiError(res.status);
