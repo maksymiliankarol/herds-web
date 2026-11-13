@@ -9,8 +9,10 @@ type Props = {
   onSelect: () => void 
 };
 
-// "food_chinese" sorts right after "food", so a sorted flat list already reads as a tree
-const byTitle = (a: Room, b: Room) => a.title.localeCompare(b.title);
+// "general" always first; "food_chinese" sorts right after "food", so a sorted flat list already reads as a tree
+const isGeneral = (r: Room) => r.title.toLowerCase() === "general";
+const byTitle = (a: Room, b: Room) =>
+  Number(isGeneral(b)) - Number(isGeneral(a)) || a.title.localeCompare(b.title);
 
 export default function RoomList({ city, rooms, error, onSelect }: Props) {
   const { t } = useLocale();
