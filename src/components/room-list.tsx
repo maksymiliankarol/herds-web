@@ -9,8 +9,9 @@ type Props = {
   onSelect: () => void 
 };
 
-// "general" always first; "food_chinese" sorts right after "food", so a sorted flat list already reads as a tree
-const isGeneral = (r: Room) => r.title.toLowerCase() === "general";
+// Pinned first, in every language we serve. "food_chinese" sorts right after "food", so a sorted flat list already reads as a tree
+const GENERAL = new Set(["general", "ogólne"]);
+const isGeneral = (r: Room) => GENERAL.has(r.title.toLowerCase());
 const byTitle = (a: Room, b: Room) =>
   Number(isGeneral(b)) - Number(isGeneral(a)) || a.title.localeCompare(b.title);
 
