@@ -1,0 +1,139 @@
+:root {
+  --background: #fff;
+  --foreground: #000;
+  --border: #c2c2c2;
+  --link: #00f;
+  --error: #f00;
+
+  --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+
+  --header-height: 3.5rem;
+}
+
+/* HTML */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  line-height: 1.5;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  padding-inline: var(--space-md);
+  background: var(--background);
+  border-bottom: 1px solid var(--border);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+h1, h2, h3, strong {
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.25rem;
+}
+
+a {
+  color: var(--link);
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+code, pre, kbd, samp {
+  font-family: var(--font-mono);
+}
+
+ul, ol {
+  padding-left: var(--space-lg);
+}
+
+ul { list-style: disc; }
+ol { list-style: decimal; }
+
+:is(ul, ol) :is(ul, ol) {
+  padding-left: var(--space-md);
+}
+
+li + li,
+li > :is(ul, ol) {
+  margin-top: var(--space-xs);
+}
+
+button {
+  padding: var(--space-sm);
+  font: inherit;
+  color: var(--background);
+  background: var(--foreground);
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+input {
+  padding: var(--space-sm);
+  font: inherit;
+  border: 1px solid var(--border);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--foreground);
+  outline-offset: 2px;
+}
+
+/* Custom */
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+
+.page {
+  margin-inline: auto;
+  padding: var(--space-md);
+}
+
+.xs  { max-width: 20rem; }
+.sm  { max-width: 30rem; }
+.md  { max-width: 40rem; }
+.lg  { max-width: 50rem; }
+.xl  { max-width: 60rem; }
+.xxl { max-width: 70rem; }
+.xxxl { max-width: 80rem; }
+
+.error {
+  color: var(--error);
+}
