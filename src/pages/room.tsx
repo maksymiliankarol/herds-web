@@ -37,7 +37,7 @@ function RoomView({ id, username }: { id: string; username: string }) {
 
   if (error) {
     return (
-      <section className="page sm column">
+      <section className="page width-sm column">
         <Link to="/">Back</Link>
         <p>{error}</p>
       </section>
@@ -45,7 +45,7 @@ function RoomView({ id, username }: { id: string; username: string }) {
   }
   if (!room) {
     return (
-      <section className="page sm column">
+      <section className="page width-sm column">
         <p>Loading...</p>
       </section>
     );
@@ -54,7 +54,7 @@ function RoomView({ id, username }: { id: string; username: string }) {
   const name = room.title.split("_").map(capitalize).join(" / ");
 
   return (
-    <section className="page xxl column noscroll">
+    <section className="page width-xl column noscroll">
       <nav>
         <Link to={`/city/${room.city_id}`}>All {room.city_title} Rooms</Link>
         {" / "}

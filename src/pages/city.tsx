@@ -78,7 +78,7 @@ export default function City() {
   }, [id]);
 
   return (
-    <section className="page sm column">
+    <section className="page width-sm column">
       <Link to="/">Back</Link>
       {error && <p className="error">{error}</p>}
       {!data && !error && <p>Loading...</p>}

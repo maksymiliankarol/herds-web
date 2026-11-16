@@ -14,9 +14,8 @@ export default function App() {
       <header>
         <nav>
           <Hexagon size={24} />
-          <a href="https://metalogrom.com">Metalogrom</a>
           {"/"}
-          <Link to="/">Herds</Link>
+          <Link to="/">M - Herds</Link>
         </nav>
       </header>
       <main>
