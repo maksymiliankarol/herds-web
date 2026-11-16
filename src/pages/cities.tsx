@@ -35,7 +35,7 @@ export default function Cities() {
   }, [q]);
 
   return (
-    <section className="page sm column">
+    <section className="page width-sm column">
       <Link to="/">Back</Link>
       <label>
         City

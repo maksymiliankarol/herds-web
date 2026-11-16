@@ -10,9 +10,9 @@ const links = [
 
 export default function Home() {
   return (
-    <section className="page sm column">
+    <section className="page width-sm column">
       <p>Welcome to <strong>M - Herds.</strong> Find your city and chat live with its residents!</p>
-      <div className="column">
+      <div className="column gap-sm">
         {links.map(({ to, label }) => (
           <p key={to}>
             <Link to={to}>{label}</Link>

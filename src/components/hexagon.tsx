@@ -49,9 +49,6 @@ export function Hexagon({ size = 32, label, ...props }: HexagonProps) {
               key={COLORS[i]}
               points={`${cx},${cy} ${x1},${y1} ${x2},${y2}`}
               fill={COLORS[i]}
-              // Thin same-color stroke hides anti-aliasing seams between wedges.
-              stroke={COLORS[i]}
-              strokeWidth={0.5}
             />
           );
         })}

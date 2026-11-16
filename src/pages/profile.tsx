@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import { getUsername, setUsername } from "../lib/username";
 
@@ -9,17 +9,18 @@ export default function Profile() {
   const navigate = useNavigate();
   const [name, setName] = useState(getUsername() ?? "");
 
-  function save(e: FormEvent) {
-    e.preventDefault();
-    setUsername(name);
-    navigate(from ?? "/", { replace: true });
-  }
-
   return (
-    <section className="page sm column">
+    <section className="page width-sm column">
       <Link to="/">Back</Link>
       {message && <p>{message}</p>}
-      <form className="column" onSubmit={save}>
+      <form
+        className="column"
+        onSubmit={(e) => {
+          e.preventDefault();
+          setUsername(name);
+          navigate(from ?? "/", { replace: true });
+        }}
+      >
         <label>
           Your name
           <input
