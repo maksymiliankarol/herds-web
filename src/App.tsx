@@ -6,14 +6,17 @@ import NotFound from "./pages/not-found";
 import Cities from "./pages/cities";
 import Profile from "./pages/profile";
 import Contact from "./pages/contact";
-import Hexagon from "./components/hexagon";
+import logo from "./assets/logo.svg";
+import Terms from "./pages/terms";
 
 export default function App() {
   return (
     <>
       <header>
         <nav>
-          <Hexagon size={24} />
+          <a href="https://metalogrom.com" target="_blank" rel="noopener">
+            <img src={logo} width="24" alt="Metalogrom" />
+          </a>
           {"/"}
           <Link to="/">M - Herds</Link>
         </nav>
@@ -26,6 +29,7 @@ export default function App() {
           <Route path="/room/:id" element={<Room />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

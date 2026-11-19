@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Wrangler
+.wrangler
+
 # Env
 .env.development
 
