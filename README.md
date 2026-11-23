@@ -1,2 +1,1 @@
-# Herds | Metalogrom
-
+# README

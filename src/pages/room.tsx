@@ -56,7 +56,7 @@ function RoomView({ id, username }: { id: string; username: string }) {
   return (
     <section className="page width-xl column noscroll">
       <nav>
-        <Link to={`/city/${room.city_id}`}>All {room.city_title} Rooms</Link>
+        <Link to={`/city/${room.city_id}`}>{room.city_title}</Link>
         {" / "}
         <p>
           {name}

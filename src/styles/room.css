@@ -1,40 +1,20 @@
-/* ---------- Layout ---------- */
-
-.noscroll {
-  position: fixed;
-  inset: 3.5rem 0 0;
-  overflow: hidden;
-}
-
-.grid-two {
-  flex: 1;
-  min-height: 0;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  grid-template-rows: minmax(0, 1fr);
-  gap: var(--space-md);
-}
-
-.grid-two > * {
-  min-height: 0;
-}
-
-/* ---------- Panels ---------- */
-
 .chat,
 .news {
   border: 1px solid var(--border);
-}
-
-.scroll {
-  flex: 1;
   min-height: 0;
-  overflow-y: auto;
-  scrollbar-gutter: stable;
-  padding: var(--space-sm);
 }
 
-/* ---------- Chat ---------- */
+.chat-input {
+  display: flex;
+  gap: var(--space-sm);
+  padding: var(--space-sm);
+  border-top: 1px solid var(--border);
+}
+
+.chat-input > input {
+  flex: 1;
+  min-width: 0;
+}
 
 .message {
   max-width: 66.667%;
@@ -50,55 +30,8 @@
   overflow-wrap: anywhere;
 }
 
-.chat-input {
-  display: flex;
-  gap: var(--space-sm);
-  padding: var(--space-sm);
-  border-top: 1px solid var(--border);
-}
-
-.chat-input > input {
-  flex: 1;
-  min-width: 0;
-}
-
-/* ---------- Shared box style ---------- */
-
 .message p,
 .news-item {
   padding: var(--space-sm);
   border: 1px solid var(--border);
-}
-
-/* ---------- Mobile view switch ---------- */
-
-.view-nav {
-  display: none;
-}
-
-.view-switch {
-  width: 100%;
-  background: var(--border);
-  color: var(--foreground);
-}
-
-.view-switch.active {
-  background: var(--link);
-  color: var(--background);
-}
-
-@media (max-width: 768px) {
-  .view-nav {
-    display: flex;
-    gap: var(--space-sm);
-  }
-
-  .grid-two {
-    grid-template-columns: minmax(0, 1fr);
-  }
-
-  .grid-two[data-view="chat"] > .news,
-  .grid-two[data-view="news"] > .chat {
-    display: none;
-  }
 }

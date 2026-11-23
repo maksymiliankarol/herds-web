@@ -18,6 +18,9 @@ dist-ssr
 # Env
 .env.development
 
+# Private
+TODO.md
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

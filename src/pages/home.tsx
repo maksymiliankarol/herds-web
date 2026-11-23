@@ -3,6 +3,7 @@ import { Link } from "react-router";
 const links = [
   { to: "/cities", label: "Cities" },
   { to: "/profile", label: "Profile" },
+  { to: "https://herds-ads.metalogrom.com", label: "Ads", external: true },
   { to: "/contact", label: "Contact" },
   { to: "/terms", label: "Terms" },
 ];
@@ -12,9 +13,15 @@ export default function Home() {
     <section className="page width-sm column">
       <p>Welcome to <strong>M - Herds.</strong> Find your city and chat live with its residents!</p>
       <div>
-        {links.map(({ to, label }) => (
+        {links.map(({ to, label, external }) => (
           <p key={to}>
-            <Link to={to}>{label}</Link>
+            {external ? (
+              <a href={to} target="_blank" rel="noopener noreferrer">
+                {label}
+              </a>
+            ) : (
+              <Link to={to}>{label}</Link>
+            )}
           </p>
         ))}
       </div>

@@ -11,7 +11,7 @@ export default function Profile() {
 
   return (
     <section className="page width-sm column">
-      <Link to="/">Back</Link>
+      <nav><Link to="/">Back</Link></nav>
       {message && <p>{message}</p>}
       <form
         className="column"

@@ -36,7 +36,7 @@ export default function Cities() {
 
   return (
     <section className="page width-sm column">
-      <Link to="/">Back</Link>
+      <nav><Link to="/">Back</Link></nav>
       <label>
         City
         <input
