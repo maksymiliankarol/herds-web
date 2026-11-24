@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { get } from "../api";
 
-type Item = { id: number; content: string; created_at: string };
+type Item = { id: number; content: string; is_ad: number; created_at: string };
 
 export default function News({ roomId }: { roomId: string }) {
   const [items, setItems] = useState<Item[] | null>(null);
@@ -18,15 +18,18 @@ export default function News({ roomId }: { roomId: string }) {
   }, [roomId]);
 
   return (
-    <div className="news scroll column">
+    <div className="news scroll column gap-sm">
       {error && <p>{error}</p>}
       {!items && !error && <p>Loading...</p>}
       {items?.length === 0 && <p>No news yet</p>}
       {items?.map((n) => (
-        <article key={n.id} className="news-item column">
+        <article key={n.id} className="news-item column gap-sm">
           <p>{n.content}</p>
           {/* SQLite timestamps are UTC without a zone marker */}
-          <small>{new Date(n.created_at.replace(" ", "T") + "Z").toLocaleDateString()}</small>
+          <div className="news-footer muted">
+            <small>{new Date(n.created_at.replace(" ", "T") + "Z").toLocaleDateString()}</small>
+            {n.is_ad === 1 && (<small>Sponsored</small>)}
+          </div>
         </article>
       ))}
     </div>
