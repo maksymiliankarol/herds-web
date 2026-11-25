@@ -41,7 +41,7 @@ export default function Cities() {
       <label>
         Find your city
         <input
-          placeholder="Warsaw..."
+          placeholder="Krakow..."
           maxLength={100}
           value={q}
           onChange={(e) => setQ(e.target.value)}

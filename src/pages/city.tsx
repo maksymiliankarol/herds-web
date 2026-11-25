@@ -6,6 +6,16 @@ import { capitalize } from "../lib/format";
 type CityInfo = { id: number; title: string };
 type Room = { id: number; title: string };
 type Node = { label: string; id?: number; children: Node[] };
+type CityData = { city: CityInfo; tree: Node[] };
+
+const CACHE_MS = 5 * 60_000; // how long a city's rooms are considered fresh
+
+// Lives outside the component so it survives going to a room and back.
+// Holds one city only, so opening another city replaces it.
+let cached: { id: string; data: CityData; at: number } | null = null;
+
+const cachedData = (id: string) =>
+  cached?.id === id && Date.now() - cached.at < CACHE_MS ? cached.data : null;
 
 // Always listed first, in this order
 const PINNED = ["general", "ogólne"];
@@ -56,20 +66,27 @@ function RoomTree({ nodes }: { nodes: Node[] }) {
 }
 
 export default function City() {
-  const { id } = useParams();
-  const [data, setData] = useState<{ city: CityInfo; tree: Node[] } | null>(null);
+  const { id = "" } = useParams();
+  const [data, setData] = useState(() => cachedData(id));
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const ctrl = new AbortController();
-    setData(null);
+    const hit = cachedData(id);
+    setData(hit);
     setError("");
+    if (hit) return;
+
+    const ctrl = new AbortController();
 
     Promise.all([
       get<CityInfo>(`/cities/${id}`, ctrl.signal),
       get<Room[]>(`/rooms?city_id=${id}`, ctrl.signal),
     ])
-      .then(([city, rooms]) => setData({ city, tree: buildTree(rooms) }))
+      .then(([city, rooms]) => {
+        const fresh = { city, tree: buildTree(rooms) };
+        cached = { id, data: fresh, at: Date.now() };
+        setData(fresh);
+      })
       .catch((e) => {
         if (!ctrl.signal.aborted) setError(e.message);
       });

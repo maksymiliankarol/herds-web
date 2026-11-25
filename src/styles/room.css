@@ -29,16 +29,20 @@
 
 .message.own {
   align-self: flex-end;
-  background: var(--link);
-  color: var(--background);
 }
 
 .message p {
   overflow-wrap: anywhere;
+  background: var(--surface); /* muted for others */
+  padding: var(--space-xs) var(--space-sm);
 }
 
-.message p,
+.message.own p {
+  background: var(--link);
+  color: var(--background);
+}
+
 .news-item {
-  padding: var(--space-sm) ;
-  border: 1px solid var(--border);
+  padding: var(--space-sm);
+  background: var(--surface);
 }

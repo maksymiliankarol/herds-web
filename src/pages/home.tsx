@@ -3,9 +3,10 @@ import { Link } from "react-router";
 const links = [
   { to: "/cities", label: "Cities" },
   { to: "/profile", label: "Profile" },
+  { to: "/settings", label: "Settings" },
   { to: "https://herds-ads.metalogrom.com", label: "Ads", external: true },
   { to: "/contact", label: "Contact" },
-  { to: "/terms", label: "Terms" },
+  { to: "/legal", label: "Legal" },
 ];
 
 export default function Home() {
