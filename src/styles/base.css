@@ -213,7 +213,7 @@ td > table td {
 @media (max-width: 768px) {
   .view-nav {
     display: flex;
-    gap: var(--space-sm);
+    gap: var(--space-md);
   }
 
   .grid-two { grid-template-columns: minmax(0, 1fr); }

@@ -85,7 +85,7 @@ export default function City() {
       {data && (
         <>
           <p>
-            Join to some <strong>{data.city.title}</strong> room!
+            <strong>{data.city.title}</strong> has rooms. Join one.
           </p>
           {data.tree.length === 0 ? <p>No rooms yet</p> : <RoomTree nodes={data.tree} />}
         </>

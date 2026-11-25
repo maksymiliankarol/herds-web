@@ -11,7 +11,8 @@ const links = [
 export default function Home() {
   return (
     <section className="page width-sm column">
-      <p>Welcome to <strong>M - Herds.</strong> Find your city and chat live with its residents!</p>
+      <h1>M - Herds</h1>
+      <p>Find your city. Join the room. Talk to locals, live.</p>
       <div>
         {links.map(({ to, label, external }) => (
           <p key={to}>

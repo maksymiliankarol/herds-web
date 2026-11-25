@@ -29,7 +29,8 @@
 
 .message.own {
   align-self: flex-end;
-  font-style: italic;
+  background: var(--link);
+  color: var(--background);
 }
 
 .message p {
@@ -38,6 +39,6 @@
 
 .message p,
 .news-item {
-  padding: var(--space-sm);
+  padding: var(--space-sm) ;
   border: 1px solid var(--border);
 }

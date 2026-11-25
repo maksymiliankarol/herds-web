@@ -37,8 +37,9 @@ export default function Cities() {
   return (
     <section className="page width-sm column">
       <nav><Link to="/">Back</Link></nav>
+      <h1>Cities</h1>
       <label>
-        City
+        Find your city
         <input
           placeholder="Warsaw..."
           maxLength={100}

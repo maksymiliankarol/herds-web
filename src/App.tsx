@@ -7,7 +7,7 @@ import Cities from "./pages/cities";
 import Profile from "./pages/profile";
 import Contact from "./pages/contact";
 import logo from "./assets/logo.svg";
-import Terms from "./pages/terms";
+import Legal from "./pages/legal";
 
 export default function App() {
   return (
@@ -29,7 +29,7 @@ export default function App() {
           <Route path="/room/:id" element={<Room />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/terms" element={<Terms />} />
+          <Route path="/legal" element={<Legal />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

@@ -11,11 +11,11 @@ const articles = [
   },
 ];
 
-export default function Terms() {
+export default function Legal() {
   return (
     <section className="page width-sm column">
       <Link to="/">Back</Link>
-      <p>Terms and policies</p>
+      <h1>Legal</h1>
       <ul>
         {articles.map((article) => (
           <li key={article.title}>
