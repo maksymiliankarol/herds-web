@@ -6,7 +6,6 @@
   --surface: #e6e6e6;
   --link: #00f;
   --error: #f00;
-  --focus: #fff;
 
   --font-sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
@@ -28,7 +27,6 @@
   --surface: #2a2a2a;
   --link: #6ea8ff;
   --error: #ff6b6b;
-  --focus: #eee;
 }
 
 /* ---------- Elements ---------- */
@@ -97,14 +95,15 @@ input {
 }
 
 :focus-visible {
-  outline: 2px solid var(--focus);
+  outline: 2px solid var(--foreground);
   outline-offset: 2px;
 }
 
 /* ---------- Buttons ---------- */
 
 button {
-  padding: var(--space-xs) var(--space-sm);
+  padding: var(--space-xs) var(--space-md);
+  align-self: flex-start;
   font: inherit;
   color: var(--background);
   background: var(--foreground);

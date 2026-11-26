@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type SubmitEvent } from "react";
 import { useNavigate } from "react-router";
 import { WS_URL } from "../api";
 
@@ -75,7 +75,7 @@ export default function Chat({ roomId, username, onOnline }: Props) {
     if (el) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
-  function send(e: FormEvent) {
+  function send(e: SubmitEvent) {
     e.preventDefault();
     const text = draft.trim();
     if (!text || socket.current?.readyState !== WebSocket.OPEN) return;
