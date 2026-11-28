@@ -101,9 +101,8 @@ export default function City() {
       {!data && !error && <p>Loading...</p>}
       {data && (
         <>
-          <p>
-            <strong>{data.city.title}</strong> has rooms. Join one.
-          </p>
+          <h1>{data.city.title}</h1>
+          <p>Chat rooms in this city:</p>
           {data.tree.length === 0 ? <p>No rooms yet</p> : <RoomTree nodes={data.tree} />}
         </>
       )}
